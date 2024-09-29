@@ -6,11 +6,10 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from fastapi import FastAPI
 from aiogram import types, Dispatcher, Bot
 
-import start_message
 from config import BOT_TOKEN, NGROK_TUNNEL_URL
-from db import check_connection, close_connection
+from handlers.db import check_connection, close_connection
 
-import promt_handler
+from handlers import promt_handler, start_message
 
 logger = logging.getLogger("Main")
 logging.basicConfig(

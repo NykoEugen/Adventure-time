@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher.router import Router
 from aiogram.filters import Command
 
-from db import db, create_collection
+from handlers.db import db, create_collection
 
 router = Router()
 logger = logging.getLogger("Main")

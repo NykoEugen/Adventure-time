@@ -25,5 +25,17 @@ async def create_collection(collection_name):
         except Exception as e:
             logger.error(f"Failed to create collection '{collection_name}': {e}")
 
+async def save_hero_changes(character_id, all_param):
+    collection = db.characters
+    character = await collection.find_one(({"character_id": character_id}))
+    if character:
+        result = await collection.update_one({"character_id": character_id}, {"$set": {all_param}})
+        if result.modified_count > 0:
+            logger.info(f"Character changes save successful {result.inserted_id}")
+    else:
+        result = await collection.insert_one(all_param)
+        if result.inserted_id:
+            logger.info(f"Character changes save successful {result.inserted_id}")
+
 async def close_connection():
     client.close()

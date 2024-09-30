@@ -14,7 +14,7 @@ async def start_handler(message: types.Message):
     await message.answer("Створюємо персонажа")
 
     user_id = message.from_user.id
-    await create_collection("characters")
+    await create_collection("characters", "character_id")
 
     character = Warrior(user_id, "Conan")
     await character.save_character_state()

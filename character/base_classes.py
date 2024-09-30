@@ -1,4 +1,4 @@
-from handlers.db import save_hero_changes
+from handlers.db import save_hero_changes, db
 
 
 class Character:
@@ -77,7 +77,7 @@ class Character:
 
     async def save_character_state(self):
         all_param = {
-                        "hero_id": self.character_id,
+                        "character_id": self.character_id,
                         "name": self.name,
                         "character_type": self.character_type,
                         "strength": self.strength,
@@ -90,7 +90,6 @@ class Character:
                         "abilities": self.abilities,
                         "equipment": self.equipment,
                     }
-
         await save_hero_changes(self.character_id, all_param)
 
 

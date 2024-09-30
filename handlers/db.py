@@ -44,7 +44,7 @@ async def save_hero_changes(character_id, all_param):
     if character:
         result = await collection.update_one({"character_id": character_id}, {"$set": all_param})
         if result.modified_count > 0:
-            logger.info(f"Character update successful {result.inserted_id}")
+            logger.info(f"Character update successful")
     else:
         result = await collection.insert_one(all_param)
         if result.inserted_id:

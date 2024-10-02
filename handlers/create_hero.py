@@ -21,6 +21,22 @@ class CreateCharacterName(StatesGroup):
 @router.callback_query(lambda callback: callback.data == "new_game")
 async def handle_character_type(callback: CallbackQuery):
     kb = inline_keyboard(warrior="Warrior", mage="Mage", archer="Archer")
+    text = ("Base stats of characters: \n\n Warrior - The Warrior is a formidable melee fighter, "
+            "renowned for their exceptional strength and endurance. "
+            "Armed with heavy armor and a variety of weapons, they excel in close combat and can "
+            "withstand significant damage: \n Strength - 15\n Dexterity - 10\n Intelligence - 5\n Endurance - 12\n "
+            "Charisma - 6\n Health - depends on Endurance * 10\n Mana - depends on Intelligence * 10\n\n "
+            "Mage - The Mage harnesses the power of magic to cast devastating spells, "
+            "utilizing their high intelligence to manipulate elemental forces. "
+            "With limited physical prowess, they rely on their magical abilities to deal damage from a "
+            "distance and support their allies: \n Strength - 5\n Dexterity - 8\n Intelligence - 15\n Endurance - 6\n "
+            "Charisma - 9\n Health - depends on Endurance * 10\n Mana - depends on Intelligence * 10\n\n "
+            "Archer - The Archer is a master of ranged combat, skilled in precision and agility. "
+            "With a keen eye and swift reflexes, they excel at taking down enemies from afar, "
+            "using a combination of bows and specialized arrows to strike with deadly accuracy: \n Strength - 8\n "
+            "Dexterity - 15\n Intelligence - 6\n Endurance - 10\n "
+            "Charisma - 9\n Health - depends on Endurance * 10\n Mana - depends on Intelligence * 10\n ")
+    await callback.message.answer(text)
     await asyncio.sleep(2)
     await callback.message.answer("Choose character type:", reply_markup=kb)
     await callback.answer()

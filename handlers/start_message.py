@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher.router import Router
 from aiogram.filters import Command
 
-from db import db, create_collection
+from handlers.db import db, create_collection
 
 router = Router()
 logger = logging.getLogger("Main")
@@ -15,7 +15,7 @@ async def start_handler(message: types.Message):
 
     user_id = message.from_user.id
     item = {"user_id": user_id}
-    await create_collection("users")
+    await create_collection("users", "user_id")
     collection = db.users
 
     exist_user = await db.users.find_one({"user_id": user_id})
@@ -27,6 +27,6 @@ async def start_handler(message: types.Message):
         else:
             await message.answer("No changes were made to the document.")
 
-
-    result = await collection.insert_one(item)
-    logger.info(f"Document inserted with ID: {result.inserted_id}")
+    else:
+        result = await collection.insert_one(item)
+        logger.info(f"Document inserted with ID: {result.inserted_id}")

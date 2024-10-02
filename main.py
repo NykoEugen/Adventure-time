@@ -6,11 +6,10 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from fastapi import FastAPI
 from aiogram import types, Dispatcher, Bot
 
-import start_message
 from config import BOT_TOKEN, NGROK_TUNNEL_URL
-from db import check_connection, close_connection
+from handlers.db import check_connection, close_connection
 
-import promt_handler
+from handlers import promt_handler, start_message, create_hero
 
 logger = logging.getLogger("Main")
 logging.basicConfig(
@@ -42,7 +41,7 @@ async def lifespan(app: FastAPI):
         logger.error(f"Failed to set webhook: {e}")
 
     logger.info("App started")
-    dp.include_routers(start_message.router, promt_handler.router, )
+    dp.include_routers(start_message.router, promt_handler.router, create_hero.router,)
     yield  # This will allow the app to run
     await bot.session.close()
     await close_connection()

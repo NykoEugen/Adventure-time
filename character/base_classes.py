@@ -78,7 +78,7 @@ class Character:
     async def save_character_state(self):
         all_param = {
                         "character_id": self.character_id,
-                        "name": self.name,
+                        "character_name": self.name,
                         "character_type": self.character_type,
                         "strength": self.strength,
                         "dexterity": self.dexterity,

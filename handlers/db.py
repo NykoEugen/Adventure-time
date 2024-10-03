@@ -1,4 +1,5 @@
 import logging
+from gc import collect
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
@@ -49,6 +50,17 @@ async def save_hero_changes(character_id, all_param):
         result = await collection.insert_one(all_param)
         if result.inserted_id:
             logger.info(f"Character add successful {result.inserted_id}")
+
+
+async def load_character(character_id):
+    collection = db.characters
+    character = await collection.find_one(({"character_id": character_id}))
+    if character:
+        logger.info("Character founds")
+        return character
+    else:
+        logger.info("Not found")
+        return None
 
 
 async def close_connection():

@@ -18,7 +18,7 @@ async def handle_character_type(callback: CallbackQuery):
         character_name = character['character_name']
         character_type = character['character_type']
         kb_title = f"{character_type} {character_name}"
-        kb = inline_keyboard(load_character=kb_title)
+        kb = inline_keyboard(start_game=kb_title)
         await callback.message.answer("You have character", reply_markup=kb)
         await callback.answer()
 

@@ -1,4 +1,5 @@
-"Base stats of characters:
+"Here are the main characteristics of the character classes. Get to know them and choose what you like more
+
 Warrior - The Warrior is a formidable melee fighter, renowned for their exceptional strength and endurance. Armed with heavy armor and a variety of weapons, they excel in close combat and can withstand significant damage:
 Strength - 15
 Dexterity - 10

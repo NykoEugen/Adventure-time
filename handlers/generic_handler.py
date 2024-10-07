@@ -7,6 +7,7 @@ from aiogram.types import CallbackQuery
 
 from handlers.ai_generation import get_chatgpt_response
 from keyboards.inline_keyboards import inline_keyboard_actions
+from utils.determinate_action_type import determine_action_types
 from utils.parse_text_and_actions import parse_text_and_actions
 from utils.load_json import load_json, save_json
 
@@ -14,7 +15,7 @@ router = Router()
 logger = logging.getLogger("Main")
 
 
-@router.callback_query(lambda callback: callback.data.startswith("action:"))
+@router.callback_query(lambda callback: callback.data.startswith("generic:"))
 async def handle_action_callback(callback: CallbackQuery):
     action = callback.data.split(":", 1)[1]
     await callback.answer()
@@ -31,10 +32,8 @@ async def handle_action_callback(callback: CallbackQuery):
     result = await get_chatgpt_response(prompt)
 
     main_text, actions = parse_text_and_actions(result)
-    logger.info(actions)
-    logger.info(result)
-
-    kb = inline_keyboard_actions(actions)
+    actions_type = determine_action_types(actions)
+    kb = inline_keyboard_actions(actions_type)
 
     game_context["conversation"].append(main_text)
     save_json(game_context)

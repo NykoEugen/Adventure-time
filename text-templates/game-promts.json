@@ -1,0 +1,55 @@
+{
+  "intro": {
+    "description": "The location is {location} with dragons, dungeon, adventure. You are a {character_type}, named {character_name} that looking for an adventure, your soul wants changes, but you haven't left this city long enough because afraid the outer world. Describe a bustling medieval fantasy town with a market, peasants and guards, tavern, guilds. 5-7 sentences",
+    "actions": {
+      "action_0": "Explore the market square",
+      "action_1": "Talk to the guards",
+      "action_2": "Visit the blacksmith"
+    }
+  },
+
+  "quests": [
+    {
+      "id": "quest_001",
+      "name": "The Lost Sword",
+      "description": "You hear of a legendary sword that was lost in the nearby forest. Do you seek it out?",
+      "options": ["Seek the sword", "Ignore the rumor"]
+    },
+    {
+      "id": "quest_002",
+      "name": "Rescue the Villagers",
+      "description": "Bandits have captured villagers in the mountains. Will you set out to rescue them?",
+      "options": ["Rescue the villagers", "Leave them to their fate"]
+    }
+  ],
+
+  "events": [
+    {
+      "id": "event_001",
+      "trigger": "walking_in_forest",
+      "description": "As you walk through the forest, a wild boar charges towards you. What do you do?",
+      "options": ["Fight the boar", "Climb a tree", "Run away"]
+    },
+    {
+      "id": "event_002",
+      "trigger": "crossing_river",
+      "description": "While crossing a river, you find an old chest stuck in the mud. Will you try to retrieve it?",
+      "options": ["Retrieve the chest", "Ignore it and move on"]
+    }
+  ],
+
+  "treasures": [
+    {
+      "id": "treasure_001",
+      "name": "Golden Chalice",
+      "description": "A beautifully crafted golden chalice with intricate carvings. It shines brightly.",
+      "value": 1000
+    },
+    {
+      "id": "treasure_002",
+      "name": "Ancient Amulet",
+      "description": "An old amulet with strange symbols. It hums with a faint magical aura.",
+      "value": 500
+    }
+  ]
+}

@@ -25,7 +25,6 @@ async def handle_character_type(callback: CallbackQuery):
     with open('text-templates/description_char_type.txt', 'r') as file:
         data = file.read()
 
-
     await callback.message.answer(data)
     await asyncio.sleep(2)
     await callback.message.answer("Choose character type:", reply_markup=kb)
@@ -71,6 +70,7 @@ async def save_new_character(callback: CallbackQuery, state: FSMContext):
             return
 
     if character is not None:
+        kb = inline_keyboard(start_game="Start Journey")
         await character.save_character_state()
-        await callback.message.answer("You character was saved")
+        await callback.message.answer("You character was saved", reply_markup=kb)
         await callback.answer()

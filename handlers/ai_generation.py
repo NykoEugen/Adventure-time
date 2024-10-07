@@ -1,3 +1,4 @@
+import json
 import logging
 
 from openai import OpenAI
@@ -20,6 +21,7 @@ async def get_chatgpt_response(prompt):
             model="gpt-4o-mini",
         )
         content = chat_completion.choices[0].message.content
+        logger.info("Request from openai successful")
         return content
     except Exception as e:
         logger.error(f"Error occurred while calling OpenAI API: {e}")

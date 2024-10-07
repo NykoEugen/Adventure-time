@@ -16,6 +16,7 @@ logger = logging.getLogger("Main")
 @router.callback_query(lambda callback: callback.data == "start_game")
 async def handle_start_game(callback: CallbackQuery):
     character_id = callback.from_user.id
+    await callback.answer()
 
     initialize_json("text-templates/game-context.json", {
         "character_id": None,
@@ -35,7 +36,8 @@ async def handle_start_game(callback: CallbackQuery):
     text = load_json("text-templates/game-promts.json")
     logger.info("Text from json added")
     character = await load_character(character_id)
-    intro = text["intro"]["description"].format(location=start_location, character_name=character["character_name"], character_type=character["character_type"])
+    intro = text["intro"]["description"].format(location=start_location, character_name=character["character_name"],
+                                                character_type=character["character_type"])
 
     game_context["character_type"] = character["character_type"]
     game_context["character_name"] = character["character_name"]
@@ -50,4 +52,3 @@ async def handle_start_game(callback: CallbackQuery):
     kb = inline_keyboard_actions(actions)
     await asyncio.sleep(2)
     await callback.message.answer(response, reply_markup=kb)
-    await callback.answer()

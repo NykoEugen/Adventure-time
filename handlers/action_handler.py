@@ -1,5 +1,6 @@
 import json
 import logging
+from random import randint
 
 from aiogram import Router
 from aiogram.types import CallbackQuery
@@ -16,23 +17,27 @@ logger = logging.getLogger("Main")
 @router.callback_query(lambda callback: callback.data.startswith("action:"))
 async def handle_action_callback(callback: CallbackQuery):
     action = callback.data.split(":", 1)[1]
+    await callback.answer()
 
     game_context = load_json("text-templates/game-context.json")
     game_context["actions"].append(action)
     game_context["last_action"] = action.lower()
+    num_actions = randint(0, 5)
 
     prompt = (f"{game_context['conversation'][-1]} You decided to {action.lower()}. 4 sentences, Please generate a narrative "
-              f"with a description and dialogue, and at the end, list up to 5 possible actions that the player can take, "
-              f"always separate them by **Possible actions:**, 2-3 words")
+              f"with a description and dialogue, and at the end, list up to {num_actions} possible actions that the player can take, "
+              f"always separate them by **Possible actions:**, 2-3 words for possible actions")
 
     result = await get_chatgpt_response(prompt)
 
     main_text, actions = parse_text_and_actions(result)
+    logger.info(actions)
+    logger.info(result)
 
     kb = inline_keyboard_actions(actions)
 
     game_context["conversation"].append(main_text)
     save_json(game_context)
 
-    await callback.message.answer(result, reply_markup=kb)
-    await callback.answer()
+    await callback.message.answer(main_text, reply_markup=kb)
+

@@ -13,7 +13,6 @@ logger = logging.getLogger("Main")
 @router.message(Command('start'))
 async def start_handler(message: types.Message):
     kb = inline_keyboard(new_game="New game", load_game="Load game")
-
     await message.answer("Витаю вас у грі: Час пригод")
 
     user_id = message.from_user.id

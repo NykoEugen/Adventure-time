@@ -2,9 +2,9 @@
   "intro": {
     "description": "The location is {location} with dragons, dungeon, adventure. You are a {character_type}, named {character_name} that looking for an adventure, your soul wants changes, but you haven't left this city long enough because afraid the outer world. Describe a bustling medieval fantasy town with a market, peasants and guards, tavern, guilds. 5-7 sentences",
     "actions": {
-      "action_0": "Explore the market square",
-      "action_1": "Talk to the guards",
-      "action_2": "Visit the blacksmith"
+      "generic_0": "Explore the market square",
+      "generic_1": "Talk to the guards",
+      "generic_2": "Visit the blacksmith"
     }
   },
 

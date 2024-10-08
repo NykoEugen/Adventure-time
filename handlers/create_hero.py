@@ -21,7 +21,7 @@ class CreateCharacterName(StatesGroup):
 @router.callback_query(lambda callback: callback.data == "new_game")
 async def handle_character_type(callback: CallbackQuery):
     kb = inline_keyboard(warrior="Warrior", mage="Mage", archer="Archer")
-
+    await callback.answer()
     with open('text-templates/description_char_type.txt', 'r') as file:
         data = file.read()
 
@@ -34,6 +34,7 @@ async def handle_character_type(callback: CallbackQuery):
 async def choose_character_type(callback: CallbackQuery, state: FSMContext):
     character_id = callback.from_user.id
     character_type = callback.data
+    await callback.answer()
     await state.update_data(character_type=character_type, character_id=character_id)
     await callback.message.answer(f"You choose {character_type}, create character name")
     await state.set_state(CreateCharacterName.waiting_for_name)
@@ -51,6 +52,7 @@ async def process_hero_name(message: types.Message, state: FSMContext):
 
 @router.callback_query(lambda callback: callback.data == "save_character")
 async def save_new_character(callback: CallbackQuery, state: FSMContext):
+    await callback.answer()
     data = await state.get_data()
     character_id = data.get("character_id")
     character_type = data.get("character_type")

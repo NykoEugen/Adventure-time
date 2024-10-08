@@ -4,8 +4,8 @@ import logging
 from aiogram import Router
 from aiogram.types import CallbackQuery
 
-from handlers.ai_generation import get_chatgpt_response
-from handlers.db import load_character
+from utils.ai_generation import get_chatgpt_response
+from utils.db import load_from_db
 from keyboards.inline_keyboards import inline_keyboard_actions
 from utils.load_json import load_json, save_json, initialize_json
 
@@ -35,7 +35,7 @@ async def handle_start_game(callback: CallbackQuery):
 
     text = load_json("text-templates/game-promts.json")
     logger.info("Text from json added")
-    character = await load_character(character_id)
+    character = await load_from_db("characters", character_id)
     intro = text["intro"]["description"].format(location=start_location, character_name=character["character_name"],
                                                 character_type=character["character_type"])
 

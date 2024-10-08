@@ -13,6 +13,7 @@ def inline_keyboard_actions(actions: dict, button_in_line = 2) -> InlineKeyboard
     kb = InlineKeyboardBuilder()
     for k, v in actions.items():
         action_type = k.split('_')[0]
-        kb.button(text=v, callback_data=f"{action_type}:{v}")
+        text = v.capitalize()
+        kb.button(text=text, callback_data=f"{action_type}:{text}")
     kb.adjust(button_in_line)
     return kb.as_markup(resize_keyboard=True)

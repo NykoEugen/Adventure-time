@@ -1,13 +1,12 @@
-import json
 import logging
 from random import randint
 
 from aiogram import Router
 from aiogram.types import CallbackQuery
 
-from handlers.ai_generation import get_chatgpt_response
+from utils.ai_generation import get_chatgpt_response
 from keyboards.inline_keyboards import inline_keyboard_actions
-from utils.determinate_action_type import determine_action_types
+from utils.determinate_action_type import determine_action_types, possible_action_str
 from utils.parse_text_and_actions import parse_text_and_actions
 from utils.load_json import load_json, save_json
 
@@ -26,8 +25,8 @@ async def handle_action_callback(callback: CallbackQuery):
     num_actions = randint(0, 5)
 
     prompt = (f"{game_context['conversation'][-1]} You decided to {action.lower()}. 4 sentences, Please generate a narrative "
-              f"with a description and dialogue, and at the end, list up to {num_actions} possible actions that the player can take, "
-              f"always separate them by **Possible actions:**, 2-3 words for possible actions")
+              f"with a description and dialogue, and at the end, list up to {num_actions} possible actions:{possible_action_str} that the player can take, "
+              f"always separate them by Possible actions:, 2-3 words for possible actions")
 
     result = await get_chatgpt_response(prompt)
 

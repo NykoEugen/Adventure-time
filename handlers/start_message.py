@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher.router import Router
 from aiogram.filters import Command
 
-from handlers.db import db, create_collection
+from utils.db import db, create_collection
 from keyboards.inline_keyboards import inline_keyboard
 
 router = Router()

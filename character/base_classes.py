@@ -1,4 +1,4 @@
-from handlers.db import save_hero_changes, db
+from utils.db import save_to_db
 
 
 class Character:
@@ -90,7 +90,7 @@ class Character:
                         "abilities": self.abilities,
                         "equipment": self.equipment,
                     }
-        await save_hero_changes(self.character_id, all_param)
+        await save_to_db("characters", self.character_id, all_param)
 
 
 class Warrior(Character):

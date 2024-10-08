@@ -1,3 +1,10 @@
+possible_action_str = ("fight, attack, defend, battle, strike, draw,"
+                      "quest, search, find, retrieve, seek, request,"
+                      "talk, speak, ask, discuss, question, inquire further,"
+                      "explore, look, discover, investigate, examine, search, observe,"
+                      "venture into, listen for, turn, approach, retreat, visit,"
+                      "rest, sleep, wait, recover,"
+                      "buy, sell, trade, purchase")
 event_keywords = {
     "battle": ["fight", "attack", "defend", "battle", "strike", "draw"],
     "quest": ["quest", "search", "find", "retrieve", "seek", "request"],

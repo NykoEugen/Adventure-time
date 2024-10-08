@@ -3,7 +3,7 @@ import logging
 from aiogram import Router
 from aiogram.types import CallbackQuery
 
-from handlers.db import load_character
+from utils.db import load_from_db
 from keyboards.inline_keyboards import inline_keyboard
 
 router = Router()
@@ -13,7 +13,7 @@ logger = logging.getLogger("Main")
 @router.callback_query(lambda callback: callback.data == "load_game")
 async def handle_character_type(callback: CallbackQuery):
     user_id = callback.from_user.id
-    character = await load_character(user_id)
+    character = await load_from_db("characters" ,user_id)
     if character:
         character_name = character['character_name']
         character_type = character['character_type']

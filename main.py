@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from aiogram import types, Dispatcher, Bot
 
 from config import BOT_TOKEN, NGROK_TUNNEL_URL
-from handlers.db import check_connection, close_connection
+from utils.db import check_connection, close_connection
 
 from handlers import promt_handler, start_message, create_hero, load_hero, start_game, generic_handler, battle_handler, \
     quest_handler, dialogue_handler

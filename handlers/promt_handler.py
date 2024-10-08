@@ -3,7 +3,7 @@ import logging
 from aiogram import Router, types
 from aiogram.filters import Command
 
-from handlers.ai_generation import get_chatgpt_response
+from utils.ai_generation import get_chatgpt_response
 
 router = Router()
 logger = logging.getLogger("Main")

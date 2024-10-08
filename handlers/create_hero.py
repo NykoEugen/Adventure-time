@@ -4,10 +4,10 @@ import logging
 from aiogram import Router, types
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import CallbackQuery
 
 from character.base_classes import Warrior, Mage, Archer
-from handlers.db import create_collection
+from utils.db import create_collection
 from keyboards.inline_keyboards import inline_keyboard
 
 router = Router()

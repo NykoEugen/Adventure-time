@@ -9,7 +9,7 @@ from quests.base_quest import QuestHandler
 from utils.ai_generation import get_chatgpt_response
 from utils.db import create_collection
 from utils.determinate_action_type import possible_action_str, determine_action_types
-from utils.load_json import load_json
+from utils.load_json import load_json, save_json
 from utils.parse_text_and_actions import parse_quest_text
 
 router = Router()
@@ -22,8 +22,11 @@ async def handle_action_callback(callback: CallbackQuery):
     character_id = callback.from_user.id
     await callback.answer()
 
-    num_actions = randint(1, 5)
     game_context = load_json("text-templates/game-context.json")
+    game_context["actions"].append(action)
+    game_context["last_action"] = action.lower()
+    num_actions = randint(1, 5)
+
     location = game_context["location"]
     prompt = (f"{game_context['conversation'][-1]} You decided to {action.lower()} whats happend next. Generate a quest with goal and reward"
               f"and description base on context."
@@ -38,7 +41,6 @@ async def handle_action_callback(callback: CallbackQuery):
     quest_data, actions = parse_quest_text(request)
 
     quest = QuestHandler(quest_data, location)
-    # quest.start_quest(character_id)
     if character_id not in quest.state:
         quest.start_quest(character_id)
 
@@ -46,7 +48,7 @@ async def handle_action_callback(callback: CallbackQuery):
     quest.update_quest_state(character_id, action)
 
     action_type = determine_action_types(actions)
-
+    game_context["conversation"].append(quest_data['quest_description'])
     await create_collection("quests", "character_id")
 
     kb = inline_keyboard_actions(action_type)
@@ -55,3 +57,5 @@ async def handle_action_callback(callback: CallbackQuery):
     quest_reward = quest_data['quest_reward']
 
     await callback.message.answer(f"Choose a quest {quest_goal}, {quest_reward}", reply_markup=kb)
+
+    save_json(game_context)

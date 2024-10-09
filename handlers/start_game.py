@@ -15,11 +15,11 @@ logger = logging.getLogger("Main")
 
 @router.callback_query(lambda callback: callback.data == "start_game")
 async def handle_start_game(callback: CallbackQuery):
-    character_id = callback.from_user.id
+    user_id = callback.from_user.id
     await callback.answer()
 
     initialize_json("text-templates/game-context.json", {
-        "character_id": None,
+        "user_id": None,
         "character_type": None,
         "character_name": None,
         "location": [],
@@ -31,11 +31,11 @@ async def handle_start_game(callback: CallbackQuery):
     start_location = "Medieval fantasy town"
     game_context = load_json("text-templates/game-context.json")
     game_context["location"].append(start_location)
-    game_context["character_id"] = character_id
+    game_context["user_id"] = user_id
 
     text = load_json("text-templates/game-promts.json")
     logger.info("Text from json added")
-    character = await load_from_db("characters", character_id)
+    character = await load_from_db("characters", user_id)
     intro = text["intro"]["description"].format(location=start_location, character_name=character["character_name"],
                                                 character_type=character["character_type"])
 

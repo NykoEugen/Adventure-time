@@ -27,7 +27,6 @@ async def handle_action_callback(callback: CallbackQuery):
     game_context["last_action"] = action.lower()
     num_actions = randint(1, 5)
 
-    location = game_context["location"]
     prompt = (f"{game_context['conversation'][-1]} You decided to {action.lower()} whats happend next. Generate a quest with goal and reward"
               f"and description base on context."
               "Format for quest: '{"
@@ -40,16 +39,16 @@ async def handle_action_callback(callback: CallbackQuery):
     request = await get_chatgpt_response(prompt)
     quest_data, actions = parse_quest_text(request)
 
-    quest = QuestHandler(quest_data, location)
-    if character_id not in quest.state:
-        quest.start_quest(character_id)
+    quest = QuestHandler()
+    result = await quest.load_quest_state(character_id)
+    if not result:
+        quest.start_quest(character_id, quest_data)
 
-        # Оновлюємо стан квесту на основі дії гравця
     quest.update_quest_state(character_id, action)
+    await quest.save_quest_state(character_id)
 
     action_type = determine_action_types(actions)
     game_context["conversation"].append(quest_data['quest_description'])
-    await create_collection("quests", "character_id")
 
     kb = inline_keyboard_actions(action_type)
 

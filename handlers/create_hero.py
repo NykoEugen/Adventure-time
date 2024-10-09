@@ -32,10 +32,10 @@ async def handle_character_type(callback: CallbackQuery):
 
 @router.callback_query(lambda callback: callback.data in {"warrior", "mage", "archer"})
 async def choose_character_type(callback: CallbackQuery, state: FSMContext):
-    character_id = callback.from_user.id
+    user_id = callback.from_user.id
     character_type = callback.data
     await callback.answer()
-    await state.update_data(character_type=character_type, character_id=character_id)
+    await state.update_data(character_type=character_type, user_id=user_id)
     await callback.message.answer(f"You choose {character_type}, create character name")
     await state.set_state(CreateCharacterName.waiting_for_name)
     await callback.answer()
@@ -54,19 +54,19 @@ async def process_hero_name(message: types.Message, state: FSMContext):
 async def save_new_character(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
     data = await state.get_data()
-    character_id = data.get("character_id")
+    user_id = data.get("user_id")
     character_type = data.get("character_type")
     character_name = data.get("character_name")
 
-    await create_collection("characters", "character_id")
+    await create_collection("characters", "user_id")
 
     match character_type:
         case "warrior":
-            character = Warrior(character_id, character_name)
+            character = Warrior(user_id, character_name)
         case "mage":
-            character = Mage(character_id, character_name)
+            character = Mage(user_id, character_name)
         case "archer":
-            character = Archer(character_id, character_name)
+            character = Archer(user_id, character_name)
         case _:
             await callback.message.answer("Invalid character type selected.")
             return

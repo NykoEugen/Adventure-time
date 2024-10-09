@@ -2,8 +2,8 @@ from utils.db import save_to_db
 
 
 class Character:
-    def __init__(self, character_id, name, character_type, strength, dexterity, intelligence, endurance, charisma):
-        self.character_id = character_id
+    def __init__(self, user_id, name, character_type, strength, dexterity, intelligence, endurance, charisma):
+        self.user_id = user_id
         self.name = name
         self.character_type = character_type
         self.strength = strength
@@ -77,7 +77,7 @@ class Character:
 
     async def save_character_state(self):
         all_param = {
-                        "character_id": self.character_id,
+                        "user_id": self.user_id,
                         "character_name": self.name,
                         "character_type": self.character_type,
                         "strength": self.strength,
@@ -90,22 +90,22 @@ class Character:
                         "abilities": self.abilities,
                         "equipment": self.equipment,
                     }
-        await save_to_db("characters", self.character_id, all_param)
+        await save_to_db("characters", self.user_id, all_param)
 
 
 class Warrior(Character):
-    def __init__(self, character_id, name):
-        super().__init__(character_id, name, "Warrior", strength=15, dexterity=10, intelligence=5, endurance=12, charisma=6)
+    def __init__(self, user_id, name):
+        super().__init__(user_id, name, "Warrior", strength=15, dexterity=10, intelligence=5, endurance=12, charisma=6)
         self.abilities = ["Shield Bash", "Battle Cry"]  # Здібності воїна
 
 
 class Mage(Character):
-    def __init__(self, character_id, name):
-        super().__init__(character_id, name, "Mage", strength=5, dexterity=8, intelligence=15, endurance=6, charisma=9)
+    def __init__(self, user_id, name):
+        super().__init__(user_id, name, "Mage", strength=5, dexterity=8, intelligence=15, endurance=6, charisma=9)
         self.abilities = ["Fireball", "Teleport"]  # Здібності мага
 
 
 class Archer(Character):
-    def __init__(self,character_id, name):
-        super().__init__(character_id, name, "Archer", strength=8, dexterity=15, intelligence=6, endurance=10, charisma=9)
+    def __init__(self,user_id, name):
+        super().__init__(user_id, name, "Archer", strength=8, dexterity=15, intelligence=6, endurance=10, charisma=9)
         self.abilities = ["Quick Shot", "Stealth"]  # Здібності лучника

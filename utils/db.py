@@ -39,24 +39,24 @@ async def create_collection(collection_name, index_name):
             logger.error(f"Failed to create collection '{collection_name}': {e}")
 
 
-async def save_to_db(collection, character_id, all_param):
+async def save_to_db(collection, user_id, all_param):
     data = db[collection]
-    character = await data.find_one(({"character_id": character_id}))
+    character = await data.find_one(({"user_id": user_id}))
     if character:
-        result = await data.update_one({"character_id": character_id}, {"$set": all_param})
+        result = await data.update_one({"user_id": user_id}, {"$set": all_param})
         if result.modified_count > 0:
-            logger.info(f"Character update successful")
+            logger.info(f"Data update successful")
     else:
         result = await data.insert_one(all_param)
         if result.inserted_id:
-            logger.info(f"Character add successful {result.inserted_id}")
+            logger.info(f"Data add successful {result.inserted_id}")
 
 
-async def load_from_db(collection, character_id):
+async def load_from_db(collection, user_id):
     data = db[collection]
-    character = await data.find_one(({"character_id": character_id}))
+    character = await data.find_one(({"user_id": user_id}))
     if character:
-        logger.info("Character founds")
+        logger.info("Data founds")
         return character
     else:
         logger.info("Not found")
